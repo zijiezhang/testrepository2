@@ -18,7 +18,7 @@
 				} catch (e) {
 					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 				}
-				xmlhttp.open("GET", "/setNum", true);
+				xmlhttp.open("POST", "/setNum", true);
 				xmlhttp.send();
 				alert("请开始填入数字");
 			}
@@ -31,7 +31,7 @@
 					$("#num").val("");
 					return;
 				}
-				$.post("/subNum",{num : num},function(data) {
+				$.get("/subNum",{num : num},function(data) {
 					var code = data.code;
 					if(code == 1) {
 						alert("猜对了！");
