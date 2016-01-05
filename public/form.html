@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>猜数字</title>
+		<style type="text/css">
+			#num {
+				width: 155px;
+			}
+		</style>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="application/javascript">
+			function startGame() {
+				var xmlhttp;
+				try {
+					xmlhttp = new XMLHttpRequest();
+				} catch (e) {
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.open("GET", "/setNum", true);
+				xmlhttp.send();
+				alert("请开始填入数字");
+			}
+
+			function submitNum() {
+				var reg = new RegExp("^[1-100]*$");
+				var num = $("#num").val();
+				if (reg.test(num)) {
+					alert("请输入1-100之内的整数!");
+					$("#num").val("");
+					return;
+				}
+				$.post("/subNum",{num : num},function(data) {
+					var code = data.code;
+					if(code == 1) {
+						alert("猜对了！");
+					} else {
+						alert("很遗憾猜错了，继续努力吧！");
+					}
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<center>
+			<h1>猜数字游戏</h1>
+			<form name="testForm">
+				<input type="button" value="点击开始游戏" onclick="startGame()" />
+				<input id="num" placeholder="请输入1-100之内的整数" type="text" min="1" max="100"/>
+				<input type="button" value="提交数字" onclick="submitNum()" />
+			</form>
+		</center>
+	</body>
+
+</html>
