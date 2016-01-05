@@ -3,7 +3,6 @@ var serveStatic = require('serve-static');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var app = express();
-var getNum;
 app.use(bodyParser.json({limit : '1mb'}));
 app.use(bodyParser.urlencoded({
 	extended : true
@@ -16,7 +15,7 @@ app.use('/setNum',session({
 	saveUninitialized : true
 }));
 app.use('/setNum',function(req,res,next) {
-	getNum = Math.floor(Math.random() * 100) + 1;
+	var getNum = Math.floor(Math.random() * 100) + 1;
 	req.session.num = getNum;
 	console.log(req.session.num);
 });
@@ -24,7 +23,7 @@ app.use('/setNum',function(req,res,next) {
 app.post('/subNum',function(req , res) {
 	//console.log(">>>>>>>>>>>>>>>>>"+req.body.num);
 	var subnum = req.body.num;
-	if(subnum == getNum) {
+	if(subnum == req.session.num) {
 		res.send({"code": 1});
 	} else {
 		res.send({"code": 0});
