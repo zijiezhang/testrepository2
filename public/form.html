@@ -24,9 +24,9 @@
 			}
 
 			function submitNum() {
-				var reg = new RegExp("^[1-100]*$");
+				var reg = /^([1-9]\d{0,1}|100)$/;
 				var num = $("#num").val();
-				if (reg.test(num)) {
+				if (!reg.test(num)) {
 					alert("请输入1-100之内的整数!");
 					$("#num").val("");
 					return;
@@ -35,8 +35,11 @@
 					var code = data.code;
 					if(code == 1) {
 						alert("猜对了！");
+						$("#num").val("");
+					} else if(code == 2) {
+						alert("大了");
 					} else {
-						alert("很遗憾猜错了，继续努力吧！");
+						alert("小了");
 					}
 				});
 			}
