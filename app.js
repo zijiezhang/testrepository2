@@ -22,21 +22,22 @@ app.use(session({
 app.use('/setNum',function(req,res,next) {
 	var getNum = Math.floor(Math.random() * 100) + 1;
 	req.session.num = getNum;
-	console.log(req.session.num);
+	console.log('>>>>>'+req.session.num);
 	//console.log(req.session);
 	res.end();
 })
 
 app.get('/subNum',function(req , res , next) {
 	//console.log(">>>>>>>>>>>>>>>>>"+req.body.num);
-	var subnum = req.body.num;
+	var subnum = req.query.num;
 	var num1 = req.session.num;
-	//console.log(num1);
+	console.log(subnum);
 	if(subnum == num1) {
 		res.send({'code': 1});
+	} else if(subnum > num1) {
+		res.send({'code': 2}); //大了
 	} else {
-		res.send({'code': 0});
+		res.send({'code': 3}); //小了
 	}
-	res.end();
 })
 app.listen(8080);
