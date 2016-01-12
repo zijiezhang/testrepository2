@@ -1,3 +1,7 @@
+var co = require('co')
+var Promise = require('promise')
+
+//co执行
 function fibo(n) {
 	if(n === 0) {
 		return 0;
@@ -9,23 +13,37 @@ function fibo(n) {
 }
 function* gen(num) {
 	for (var i = 0; i <= num; i++) {
-		yield show(fibo(i));
+		var z = fibo(i);
+		yield show(z);
 	}
 }
 function show(val){
-	console.log('>>>>'+val);
-}
-function start(gen,num) {
-	var g = gen(num);
-	function nextStep(it) {
-		if(it.done) {
-			return;
-		}
+	return new Promise(function(resolve) {
 		setTimeout(function(){
-        	nextStep(g.next());
-    	},1000);
-	}
-	nextStep(g.next());
+         	console.log(val);
+         	resolve();
+    	},1000)
+	})
 }
-start(gen,5);
+var g = gen(10)
+co(g)
+
+
+//手动执行next
+// function show(val){
+// 	console.log('>>>>'+val);
+// }
+// function start(gen,num) {
+// 	var g = gen(num);
+// 	function nextStep(it) {
+// 		if(it.done) {
+// 			return;
+// 		}
+// 		setTimeout(function(){
+//         	nextStep(g.next());
+//     	},1000);
+// 	}
+// 	nextStep(g.next());
+// }
+// start(gen,5);
 //gen().next()
