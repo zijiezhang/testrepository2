@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>猜数字</title>
+		<style type="text/css">
+			#num {
+				width: 155px;
+			}
+		</style>
+	</head>
+
+	<body ng-app="guessNum">
+		<center>
+			<div ng-controller="guessController">
+				<h1>猜数字游戏</h1>
+				<input type="button" value="点击开始游戏" ng-click="startGame()" />
+				<form name="testForm" ng-submit="getNum()">
+					<input id="num" placeholder="请输入1-100之内的整数" type="number" min="1" max="100" ng-model="answer" />
+					<input type="submit" value="提交数字" />
+				</form>
+			</div>
+		</center>
+		<script src="js/source/angular.min.js"></script>
+		<script src="js/controller.js"></script>
+	</body>
+
+</html>
